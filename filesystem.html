@@ -1,0 +1,196 @@
+<html>
+<style>
+td {
+  vertical-align: top;
+}
+tr {
+  border-bottom: 1px solid #888;
+}
+</style>
+<body>
+<table>
+  <tr>
+    <td colspan=100><h4>Filesystem URLs</h4></td>
+  </tr>
+  <tr>
+    <td>Html with form:</td>
+    <td><a href="#" id="filesystem1">html</a></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Plain Text:</td>
+    <td><a href="#" id="filesystem2">text/plain</a></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Html with mixed content:</td>
+    <td><a href="#" id="filesystem3">mixed-content</a></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan=100><br><h4>Blob URLs</h4></td>
+  </tr>
+  <tr>
+    <td>Html with form:</td>
+    <td>
+        <a href="#" id="blob1">html</a><br>
+        <button id="btn_blob1">history.replaceState()</button>
+    </td>
+    <td><iframe id="iframe_blob1"></iframe></td>
+  </tr>
+  <tr>
+    <td>Plain Text:</td>
+    <td><a href="#" id="blob2">text/plain</a></td>
+    <td><iframe id="iframe_blob2"></iframe></td>
+  </tr>
+  <tr>
+    <td>Html with mixed content: </td>
+    <td><a href="#" id="blob3">mixed-content</a></td>
+    <td><iframe id="iframe_blob3"></iframe></td>
+  </tr>
+
+  <tr>
+    <td><br><h4>Data URLs</h4></td>
+  </tr>
+  <tr>
+    <td>Html with form:</td>
+    <td><a href="#" id="data1">html</a><br>
+        <button id="btn_data1">history.replaceState()</button>
+    </td>
+    <td><iframe id="iframe_data1"></iframe></td>
+  </tr>
+  <tr>
+    <td>Plain Text:</td>
+    <td><a href="#" id="data2">text/plain</a></td>
+    <td><iframe id="iframe_data2"></iframe></td>
+  </tr>
+  <tr>
+    <td>Html with mixed content:</td>
+    <td><a href="#" id="data3">mixed-content</a></td>
+    <td><iframe id="iframe_data3"></iframe></td>
+  </tr>
+  <tr>
+    <td>Html with blob URL:</td>
+    <td><a href="#" id="data4">html-with-blob</a></td>
+    <td><iframe id="iframe_data4"></iframe></td>
+  </tr>
+</table>
+
+<h4>Random stuff:</h4>
+<a href="chrome://settings">chrome://settings link</a><br>
+<a href="chrome://settings" target="_blank">chrome://settings link in new tab</a><br>
+
+<button onclick="history.back()">GO BACK with history.back()</button><br><br>
+<button onclick="history.forward()">GO FWD with history.forward()</button>
+
+<script>
+
+function createFile(fs, name, mimeType, content, domElement) {
+  fs.root.getFile(name, {create: true, exclusive: false}, function(fileEntry) {
+    fileEntry.createWriter(function(fileWriter) {
+      fileWriter.onwriteend = function(e) {
+        console.log(name + ' written.');
+        domElement.href = fileEntry.toURL();
+        domElement.textContent = fileEntry.toURL();
+      };
+      fileWriter.onerror = function(e) {
+        console.log('Write failed: ' + e.toString());
+      };
+      // Create a new Blob and write it to log.txt.
+      var blob = new Blob([content], {type: mimeType});
+      fileWriter.write(blob);
+      }, errorHandler);
+    }, errorHandler);
+}
+
+function createBlobUrl(mimeType, content) {
+  return URL.createObjectURL(new Blob([content], {type: mimeType}));
+}
+
+var mixedContent = "<html>Mixed content: <iframe src='http://example.com'></iframe></" + "html>";
+var password = "<html" +"><form><input type=password></form><br><br>" +
+                "<a href='http://example.com'>Link outside</a><br><br>" +
+                "<a href='#test'>Link inside page</a><br><br>" +
+                "<a name=test/>" +
+                "</" + "html>";
+
+function onInitFs(fs) {
+  console.log('Opened file system: ' + fs.name);
+  createFile(fs, "test.html", "text/html",
+             password,
+             document.getElementById("filesystem1"));
+  createFile(fs, "test.txt", "text/plain",
+             "test file",
+             document.getElementById("filesystem2"));
+
+  createFile(fs, "mixed-content.html", "text/html",
+             mixedContent,
+             document.getElementById("filesystem3"));
+}
+
+var dataWithBlob = "<html><script>url = URL.createObjectURL(" +
+    "new Blob(['Blob with null URL'], {type: 'text/html'})); " +
+    "window.location = url;</" + "script></html>";
+
+function createUrls() {
+  var blobUrl1 = createBlobUrl("text/html", password);
+  document.getElementById("blob1").textContent = blobUrl1;
+  document.getElementById("blob1").href = blobUrl1;
+  document.getElementById("iframe_blob1").src = blobUrl1;
+
+  var blobUrl2 = createBlobUrl("text/plain", "test");
+  document.getElementById("blob2").textContent = blobUrl2;
+  document.getElementById("blob2").href = blobUrl2;
+  document.getElementById("iframe_blob2").src = blobUrl2;
+
+  var blobUrl3 = createBlobUrl("text/html", mixedContent);
+  document.getElementById("blob3").textContent = blobUrl3;
+  document.getElementById("blob3").href = blobUrl3;
+  document.getElementById("iframe_blob3").src = blobUrl3;
+
+  document.getElementById("data1").href = "data:text/html," + password;
+  document.getElementById("data2").href = "data:text/plain,test";
+  document.getElementById("data3").href = "data:text/html," + mixedContent;
+  document.getElementById("data4").href = "data:text/html," + dataWithBlob;
+
+  document.getElementById("data1").textContent =
+      document.getElementById("data1").href;
+  document.getElementById("data2").textContent =
+      document.getElementById("data2").href;
+  document.getElementById("data3").textContent =
+      document.getElementById("data3").href;
+  document.getElementById("data4").textContent =
+      document.getElementById("data4").href;
+
+  document.getElementById("iframe_data1").src =
+      document.getElementById("data1").href;
+  document.getElementById("iframe_data2").src =
+      document.getElementById("data2").href;
+  document.getElementById("iframe_data3").src =
+      document.getElementById("data3").href;
+  document.getElementById("iframe_data4").src =
+      document.getElementById("data4").href;
+
+  document.getElementById("btn_blob1").onclick = function() {
+    history.replaceState({}, "Page", document.getElementById("blob1").href);
+  }
+  document.getElementById("btn_data1").onclick = function() {
+    history.replaceState({}, "Page", document.getElementById("data1").href);
+  }
+}
+
+function errorHandler(e) {
+  console.log("ERROR: ", e);
+}
+
+createUrls();
+window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+
+if (window.requestFileSystem) {
+  window.requestFileSystem(
+    window.TEMPORARY, 5*1024*1024 /*5MB*/, onInitFs, errorHandler);
+}
+</script>
+</body>
+</html>
+

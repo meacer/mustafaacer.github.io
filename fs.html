@@ -1,0 +1,17 @@
+<html>
+<body onclick="toggleFullScreen()">
+  Click to enter fullscreen
+<script>
+function toggleFullScreen() {
+  document.documentElement.webkitRequestFullscreen();
+}
+
+document.addEventListener('keyup', function(es) {
+  if (es.keyCode == 27) {
+    toggleFullScreen();
+  }
+}, false);
+</script>
+</html>
+
+

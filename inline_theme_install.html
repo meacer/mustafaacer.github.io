@@ -1,0 +1,13 @@
+<html>
+<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/fpkbcibelbkjdljgeepmoojmodcfkmal">
+<script>
+function install() {
+  chrome.webstore.install(
+      'https://chrome.google.com/webstore/detail/fpkbcibelbkjdljgeepmoojmodcfkmal',
+      function() { console.log("SUCCESS"); },
+      function(err) { console.log("ERROR :", err); }
+  );
+}
+</script>
+<button onclick="install()">Theme install</button>
+</html>

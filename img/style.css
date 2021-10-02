@@ -1,0 +1,220 @@
+body {
+	text-align: 		    center;
+	background-color: 	#BFD9F4;
+	background-color: 	#FFA801;
+	background-color: 	#eeeeee;
+	background-color: 	black;
+	background-image: 	url("img/bg_gradiant2.png");
+	background-repeat: 	repeat-x;
+  font-family:        Helvetica;
+  font-size:          10pt;
+}
+
+
+#sayfa {
+	width:			805px;
+	position:		relative;
+	margin-left-value:	auto;
+	margin-right-value:	auto;
+	text-align: 		center;
+
+	margin: 		0 auto;
+	height: 		100%;
+}
+
+#header
+{
+	width: 100%;
+	text-align: left;
+	/*background-image: url("img/arkaplan.png");*/
+	background-repeat: no-repeat;
+}
+
+
+#logo {
+/*	background-image: url("img/logo.png");
+	background-image: url("img/mealogo1.png");*/
+	/*background-image: url("img/mustafas_home_page.png");
+  width:  		700px;
+	height: 		90px;
+	margin-left: 		40px;
+	margin-top: 		10px;
+	margin-bottom: 		10px;*/
+
+  background-image: url("trex_shuttle2.png");
+	background-repeat: no-repeat;
+  width: 805px;
+  height:250px;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* ---------------------------------------------------------------------------*/
+
+
+#navbar {
+
+	display:		block;
+
+	width: 			100%;
+	height: 		40px;
+
+	background-color: 	#276FD6;
+	background-color: 	#cccc11;
+	background-color: 	#4397FF;
+	background-color: 	#bb3333;
+  background-color:   #782020;
+	/*background-image: 	url("img/red_grad2.png");*/
+	overflow:		hidden;
+
+	text-align:		center;
+
+	padding:		0 0 0 0;
+}
+
+#navbar ul
+{
+	width:			auto;
+	height:			43px;
+	display: 		block;
+
+	list-style: 		none;
+
+	padding:		0 0 0 0;
+	margin:			0 0 0 0;
+
+}
+
+#navbar li
+{
+	display:		inline;
+	min-width:		125px;
+
+	width:			125px;
+	height:			43px;
+	_height:		43px;
+	min-height:		43px;
+
+	padding-bottom:		20px;
+	line-height:		20px;
+}
+
+#navbar li a
+{
+	text-align:   center;
+	color:        white;
+	display:      inline-block;
+
+	font-weight:      bold;
+	text-decoration:  none;
+
+	width:        100px;
+	min-width:    100px;
+	height:       43px;
+
+	padding-left:   20px;
+	padding-right:  20px;
+	padding-top:    10px;
+	padding-bottom: 20px;
+	
+	line-height:    20px;
+
+	margin-left:    10px;
+	margin-right:   10px;
+}
+
+#navbar li a:hover
+{
+	background-color: yellow;
+  color: black;
+}
+
+
+#active a
+{
+	text-align:		center;
+	font-weight: 		bold;
+	text-decoration: 	none;
+	width: 			125px;
+	color: 			white;
+	height:			43px;
+
+	background-color: 	#333380;
+
+	margin-left:		10px;
+	margin-right:		10px;
+
+}
+#active a:hover {
+	color: white;
+	background-color: #aaaaff;
+}
+
+/* ---------------------------------------------------------------------------*/
+#pagebody {
+	background-color: 	white;
+	padding-top: 		20px;
+	padding-left:		20px;
+}
+#searchbox {
+	display: 		none;
+	float: 			right;
+	margin-top: 		-70px;
+	margin-right: 		20px;
+}
+
+.textbox {
+	width: 			150px;
+	height: 		18px;
+}
+
+.searchbutton {
+	color: 			white;
+	width:			50px;
+	height: 		18px;
+	border:			0px;
+	cursor: 		hand;
+	background-image: 	url("img/searchbutton.png");
+	background-color: 	orange;
+}
+
+#pagefooter {
+	width: 			100%;
+	height: 		60px;
+	text-align: 		left;
+	background-image: 	url("img/arkaplan_ters.png");
+	background-repeat: 	no-repeat;
+}
+
+
+#disclaimer {
+	text-align: 		center;
+	color: 			#555555;
+}
+
+a {
+	color: #2222dd;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+
+#content {
+	width: 			740px;
+	padding-left:		auto;
+	padding-right:		auto;
+	margin-left: 		auto;
+	margin-right: 		auto;
+}
+
+h4
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	font-size: 1.1em;
+}

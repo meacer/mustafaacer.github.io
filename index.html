@@ -1,0 +1,750 @@
+<!-- Author: Mustafa Acer -->
+<html>
+<head>
+<meta content="text/html; charset=windows-1254" http-equiv="Content-Type">
+<title>Mustafa Emre Acer's Personal Web Site</title>
+<meta name="keywords" content="mustafa,emre,acer,mustafa acer,javascript,3d,html5,canvas,cmu,odtu,software engineering, mea3d">
+<meta name="description" content="Mustafa's personal web site, including projects, pictures and other random stuff, all in 3D with JavaScript!">
+<meta http-equiv="Content-language" content="en">
+<meta name="google-site-verification" content="nLEvQp9SnOvOTEETVM3VhE2zo3csFHyDldedU7l4Ths" />
+<style>
+body {
+  background-color: black;
+  padding:0; margin:0; 
+  scrollbar-base-color:#333;
+  scrollbar-face-color:#333;
+}
+
+h1 {
+  font-family: Aller, Helvetica, Verdana, sans-serif;
+  font-size: 28px;
+  font-weight:bold;
+  margin: 5px 5px 2px 300px;
+  text-shadow: black 1px 1px 2px;
+} 
+#rayTraceProgress {
+  font-size: 10pt;
+}
+#framesPerSecond, #benchmark {
+  color: #aaaaaa;
+  font-size:10pt;
+  float:left;
+}
+.popup {
+  display: none;
+  z-index: 9999; 
+  position:absolute; 
+  left:275px; 
+  top: 10px; 
+  margin: 0 auto; 
+  padding: 0;
+  width: 750px; 
+  height:650px; 
+  color: #eee; 
+  font-family: Arial;
+  font-size: 10pt;
+}
+.popup a{
+  color: #99f;
+  text-decoration: none;
+}
+.popup a:hover{
+  color: #dda;
+  text-decoration: underline;
+}
+.popup_body {
+  background: transparent url('web/grid.png');
+  height:100%;
+  width: 100%;
+}
+#mea_logo {
+  background: transparent url('web/mea_logo.png') no-repeat;
+  width: 380px;
+  height:60px;
+  display:block;
+  position:absolute;
+  left:310px;
+  top:10px;
+  z-index:99999;
+}
+
+.popup_container {
+  margin:0 auto;
+  width: 750px;
+}
+.popup_titlebar {
+  float: left;
+  display:inline-block;
+  margin:0;
+  padding:0;
+  width:375px;
+  height:33px;
+  background: transparent url('web/nav_bg.gif');  
+}
+.popup_titlebar span {
+  padding-left:50px; padding-top:10px; line-height:33px;
+}
+.popup_titlebar_close {
+  float: left;
+  display:inline-block;
+  margin:0;
+  padding:0;
+  width:375px;
+  height:33px;
+  background: transparent url('web/nav_bg.gif') top right;  
+}
+.popup_titlebar_close span {
+  float:right;
+  padding-right:10px;
+  line-height:33px;
+  font-weight:bold;
+  margin-top: 5px;
+}
+.popup_titlebar_close_button {
+  font-family: bold;
+  background: transparent url(web/popup_close.png) top left;
+  width: 19px;
+  height: 19px;
+  display:block;
+}
+.popup_titlebar_close_button:hover {
+  background-position: top right;
+}
+.popup_body div {
+  padding: 5px;
+}
+.popup_body h2 {
+  font-size: 12pt;
+  border-bottom: 2px solid #ffa;
+  text-align:right;
+}
+.project-list {
+  list-style:none;
+  width: 98%;
+  font-size: 10pt;
+  padding: 0;
+  margin: 0 10px 0 10px;
+  display: block;  
+};
+.project-list-item {
+  width: 100%;
+  height: 120px;
+  display: block;
+  padding: 5px;
+  margin: 5px;
+  clear: both;
+}
+.project-list li div {
+  width:100%;
+  height:100px;
+  margin: 5px;
+  padding: 5px;
+}
+.project-list-image {
+  width:  100px;
+  height: 100px;
+  float: left;
+  display: inline-block;
+} 
+.project-list-image span {
+  border:1px solid #aaa;
+  padding:1px;
+}
+.project-list-desc {
+  display: inline-block;
+  float: right;
+  width: 590px;
+}
+.project-list-desc h1 {
+  font-size:12pt;
+  margin: 0;
+  padding: 0;
+}
+.project-list-desc h1 a {
+  color: white;
+}
+.project-list-desc p {
+  margin: 0;
+  color: #ddd;
+}
+ #ie_div {
+  border: 1px solid #222;
+  color: white;
+  width: 750px;
+  clear: both;
+  height: 500px;
+  min-height: 500px;
+  overflow: visible;
+  display:block;
+  background: transparent url(web/trex_shuttle2.png) 0 50px no-repeat;
+ }
+ #ie_div h1 {
+  margin: 5px;
+ }
+.ie_nav_list {
+  display: block;
+  max-width: 650px;
+  list-style:none;
+  width: 100%;
+  white-space: nowrap;
+  margin-left:0;
+  margin-right:0;
+  margin-top:300px;
+  margin-bottom:50px;
+  border-bottom: 2px solid #ffa;  
+}
+.ie_nav_list li {
+  display: inline-block;
+  float: left;
+  color: white;
+  margin-left: 40px;
+}
+.ie_nav_list li a {
+  color: white;
+  text-decoration: none;
+}
+.ie_nav_list li a:hover {
+  color: #dda
+}
+.ie_nav_list li h1 {
+  font-size: 24pt;  
+}
+#ie_warning {
+  background-color: #111;
+  text-align:left; 
+  width:100%;
+  color: #888; 
+  font-size:10.5pt; 
+  font-weight: normal;  
+  margin: 0;
+  padding: 0;
+}
+#ie_warning div {
+  margin: 5px;
+  padding: 5px;
+}
+#ie_warning span {
+  color: #ddd;
+  font-weight: bold;
+}
+
+.minilink {
+  color: #777;
+  text-decoration:underline;
+  font-weight:normal;
+}
+.minilink:hover {
+  text-decoration: none;
+  color:#ccc;  
+}
+.popup_desc {
+  margin-left:30px;
+}
+</style>
+</head>
+
+<body leftmargin=0 topmargin=0 style='font-family:Tahoma' scroll="no">
+<!--
+<div style="width:890px; height:690px; background: url('web/bg2.png') no-repeat 0 0; margin:0 auto;">
+  <div id="sceneDiv" style="border:1px solid black; width:800px; height:600px; margin: 0 auto; padding-top:40px"></div>
+</div>
+-->
+<div id="mea_logo"></div> 
+<div id="sceneDiv" style="border:1px solid black; width:100%; height:100%; min-height: 600px; margin: 0 auto;"></div>
+<!--
+<span id="framesPerSecond"></span>
+<span id="benchmark">&nbsp;frames per second</span>
+-->
+
+<div id="popupProjects" class="popup">
+  <div class="popup_container">
+    <div class="popup_titlebar">
+      <span></span>
+    </div>    
+    <div class="popup_titlebar_close">
+      <span>
+        <a href="#" class="popup_titlebar_close_button" onclick="closePopup('popupProjects');return false;"></a>
+      </span>
+    </div>
+    <br>
+    <div class="popup_body">
+      <div>
+      <h1>PROJECTS</h1>
+      
+      <div style="height: 550px; overflow-x: hidden; overflow-y:scroll">
+      <ul class="project-list">
+        <li><h2>Academic &amp; Professional</h2></li>
+        <li class="project-list-item">
+          <div>
+            <span class="project-list-image"><img src="web/nasa_cbm.png" border=0></span>
+            <span class="project-list-desc">
+              <h1><a href="http://byss.arc.nasa.gov/cbm">NASA Content Based Planetary Image Search System</a></h1>
+              <p>
+              A similarity-based image search system we built for 
+              <a href="http://www.arc.nasa.gov">NASA Ames Research Center</a>. 
+              It is capable of classifying large
+              number of planetary images based on their visual similarity. Similarity 
+              calculation is based on various image features. The backend is built on C++ and
+              Python and uses Hadoop as the distributed computation platform.<br>
+              Check it out at 
+              <a href="http://byss.arc.nasa.gov/cbm">http://byss.arc.nasa.gov/cbm</a> 
+              (don't forget to take a look at the about page!)</p>
+            </span>
+          </div>
+        </li>
+        <li class="project-list-item">
+          <div>
+            <span class="project-list-image"><img src="web/browserstats.png" border=0></span>
+            <span class="project-list-desc">
+              <h1><a href="http://browserstats.appspot.com">BrowserStats</a></h1>
+              <p>A live browser vulnerability statistics site I built as part 
+              of my research in Carnegie Mellon with 
+              <a href="http://www.collinjackson.com" target="_blank">Collin Jackson</a>. 
+              The system runs on Google App Engine and it collects data via ad 
+              networks from thousands of people every day, processes them and 
+              presents the results on a vulnerability timeline. We presented this project in 
+              <a href="http://w2spconf.com/2010/">Web 2.0 Security &amp; Privacy 2010 
+              conference</a> in Oakland, CA. <a href="http://w2spconf.com/2010/papers/p21.pdf">
+              Click here for the position paper we presented </a>.
+              </p>
+            </span>            
+          </div>
+        </li>
+        <li class="project-list-item">
+          <div>
+            <span class="project-list-image"><img src="web/browserscope.png" border=0></span>
+            <span class="project-list-desc">
+              <h1><a href="http://browserscope.org">Browserscope</a></h1>
+              <p>A community-driven Google project for profiling web browsers. I have contributed JavaScript tests to its
+              <a href="http://www.browserscope.org/security/test">security category</a>.
+              Browserscope is 
+              <a href="http://code.google.com/p/browserscope/" target="_blank">an open source project</a>.
+              </p>
+            </span>            
+          </div>
+        </li>
+        <li class="project-list-item">
+          <div>
+            <span class="project-list-image">
+              <a href="https://chrome.google.com/extensions/detail/gbpigbbibemhceimlpnphnnhmaifamjm/">
+                <img src="web/secbrowsing_extension.png" border=0>
+              </a>
+            </span>
+            <span class="project-list-desc">
+              <h1><a href="https://chrome.google.com/extensions/detail/gbpigbbibemhceimlpnphnnhmaifamjm/">
+                CMU Plug-in Management Extension</a>
+              </h1>
+              <p>This is a Google Chrome extension that 
+              periodically checks vulnerability levels of all your browser plug-ins. 
+              It is based on <a href="http://secbrowsing.appspot.com">SecBrowsing</a>.
+              I built this extension as part of the Browserstats project. 
+              If you are using another
+              browser, you can directly check out the extension page 
+              <a href="http://browserstats.appspot.com/extension/" target="_blank">here</a>.
+              </p>
+            </span>            
+          </div>
+        </li>
+        
+        <li><h2>Personal</h2></li>
+        <li class="project-list-item">
+          <div>
+            <span class="project-list-image"><img src="web/mea3d.png" border=0></span>
+            <span class="project-list-desc">
+              <h1><a href="http://code.google.com/p/mea3D">mea3D - JavaScript 3D Engine and Raytracer</a></h1>
+               <p>
+               This is a 3D engine I wrote from scratch in JavaScript. 
+               All the 3D stuff is <b>pure HTML5</b>, mea3d uses no Flash, no Silverlight, no DirectX and no OpenGL. 
+               The engine supports transformations, lighting, loading 
+               of custom 3D models in JSON format and has some other cool features. It even
+               has a raytracer which can render reflections and shadows!.
+               <a href="http://code.google.com/p/mea3d">Click here for mea3D source code</a>.
+               To see a demo of mea3D, <a href="/chrome_experiment">check my (candidate) Chrome Experiment</a>.
+               </p>
+            </span>            
+          </div>
+        </li>
+        <li class="project-list-item">
+          <div>
+            <span class="project-list-image">
+              <a href="http://www.youtube.com/v/mHAaleQdb7A&hl=en_US&fs=1&" class="project-link">
+                <img src="web/gameremote.png" border=0>
+              </a>
+            </span>
+            <span class="project-list-desc">
+              <h1><a href="http://www.youtube.com/watch?v=mHAaleQdb7A">GameRemote</a></h1>
+              <p>
+                A mobile application that lets you use your Android phone as a game controller. The
+                application connects to a server where sensor data from phone is broadcast to other 
+                clients. The cool thing is, users can play games in their browsers using their phones,
+                just like a real racing wheel or a Wii Controller. You don't even need to install
+                software on your computer!
+                <br>
+                <a href="http://www.youtube.com/watch?v=mHAaleQdb7A">See GameRemote demo video on YouTube!</a>
+                <!--<object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/mHAaleQdb7A&hl=en_US&fs=1&"></param> 
+                <param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param> 
+                <embed src="http://www.youtube.com/v/mHAaleQdb7A&hl=en_US&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" 
+                allowfullscreen="true" width="480" height="385"></embed></object> -->
+              </p> 
+            </span>            
+          </div>
+        </li>
+
+        <li><h2>Other</h2></li>
+        <li class="project-list-item">
+          <div>
+            <span class="project-list-image"><img src="web/deasciifier.png" border=0></span>
+            <span class="project-list-desc">
+              <h1><a href="https://chrome.google.com/extensions/detail/nhfdmlgglfmcdheoabgklabmgjklgofk">
+                Turkish Deasciifier</a></h1>
+               <p>
+               A Turkish text deasciifier which restores accented characters 
+               from non-accented Turkish text. Useful for people who type Turkish 
+               on non-Turkish keyboards. Based on <a href="http://www.denizyuret.com/turkish">
+               Deniz Yuret's LISP deasciifier for Emacs</a>.<br>
+               <a href="http://code.google.com/p/deasciifier/">For JavaScript and Python sources, click here.</a><br>
+               <a href="http://turkce-karakter.appspot.com/">For the web application, click here.</a><br>
+               </p>
+            </span>            
+          </div>
+        </li>        
+      </ul>    
+      </div>
+     </div>
+   </div>
+  </div>
+</div>
+
+<div id="popupAboutMe" class="popup">
+  <div class="popup_container">
+    <div class="popup_titlebar">
+      <span></span>
+    </div>    
+    <div class="popup_titlebar_close">
+      <span>
+        <a href="#" class="popup_titlebar_close_button" onclick="closePopup('popupAboutMe');return false;"></a>
+      </span>
+    </div>
+
+    <br>
+    <div class="popup_body">
+      <div>
+        <h1>ABOUT ME</h1>
+        
+        <div style="height: 550px; overflow-x: hidden; overflow-y:auto">
+        <ul class="project-list">
+          <li><h2>Background</h2></li>
+          <li class="project-list-item">
+            <div>
+              <span class="project-list-desc">
+                <p>
+                I am currently a MS of Software Engineering student in 
+                <a href="http://sv.cmu.edu" target="_blank">Carnegie Mellon Silicon Valley</a>.
+                </p>
+                
+                <p>Before joining Carnegie Mellon, I was a member of the 
+                <a href="http://iui.ku.edu.tr" target="_blank">Intelligent User Interfaces Lab</a> at 
+                <a href="http://www.ku.edu.tr" target="_blank">Koc Universitesi</a>, 
+                <a target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Sar%C4%B1yer,+Ko%C3%A7+%C3%9Cniversitesi,+Istanbul,+T%C3%BCrkiye&sll=37.0625,-95.677068&sspn=40.052282,79.013672&ie=UTF8&hq=&hnear=Ko%C3%A7+%C3%9Cnv.,+Sar%C4%B1yer,+34450+Istanbul+Province,+Turkey&ll=41.204909,29.077506&spn=0.01863,0.054932&z=15">Istanbul</a>.
+                </p>
+                
+                <p>I have a BS degree in Electrical and Electronics Engineering from 
+                <a target="_blank" href="http://www.metu.edu.tr"> Orta Dogu Teknik Universitesi</a>,     
+                <a target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=%C3%87ankaya,+ODT%C3%9C+Elektrik,+Ankara,+T%C3%BCrkiye&sll=39.897111,32.777324&sspn=0.009499,0.027466&ie=UTF8&hq=&hnear=%C3%87ankaya,+ODT%C3%9C+Elektrik,+Ankara,+Turkey&ll=39.890805,32.785778&spn=0.018999,0.054932&z=15">Ankara</a>, Turkey.
+                </p>
+              </span>            
+            </div>
+          </li>
+          <li><h2>Publications</h2></li>
+          <li class="project-list-item" style="height:70px">
+            <div>
+            <span class="project-list-desc">
+              <h1><a href="http://w2spconf.com/2010/papers/p21.pdf" 
+                  class="project-link" style="font-weight:bold">Critical Vulnerability in Browser Security Metrics
+                  </a></h1>
+               <p><b>
+                <a href="http://w2spconf.com/2010/" target="_blank"> 
+                Web 2.0 Security and Privacy (W2SP) 2010, Oakland, CA</a><br> 
+                <i>Mustafa Acer, <a href="http://www.collinjackson.com" target="_blank">Collin Jackson</a> 
+                </i> 
+               </p>
+             </span>            
+           </div>
+          </li>
+          <li class="project-list-item" style="height:70px">
+            <div>
+              <span class="project-list-desc">
+                <h1><a href="/papers/feature_extraction.pdf" class="project-link" style="font-weight:bold">
+                  Feature Extraction and Classifier Combination for Image-based Sketch Recognition
+                  </a>
+                </h1>
+                <p> 
+                  <a href="http://graphics.cs.williams.edu/sbim-npar10/program.html" target="_blank"> 
+                  ACM Symposium on Sketch Based Interfaces and Modeling 
+                  (SBIM) 2010, Annecy, France
+                  </a> 
+                  <br><i>R.Sinan Tumen, Mustafa E. Acer, 
+                  <a href="http://iui.ku.edu.tr/index.php?option=com_content&view=category&layout=blog&id=48&Itemid=53" 
+                  target="_blank">T.Metin Sezgin</a></i> 
+                </p>
+              </span>            
+            </div>
+          </li>
+          <li><h2>What's with the 3D stuff?</h2></li>
+          <li class="project-list-item">
+            <div>
+              <span class="project-list-desc">
+                <p>
+                  A while ago, I wrote a 3D JavaScript engine (mea3D). Then I thought
+                  using this engine for website navigation could be cool, so I made this website.
+                  All the 3D stuff is <b>pure HTML5</b>; there is no Flash, no Silverlight, no DirectX and no OpenGL. 
+                  The engine supports transformations, lighting, loading 
+                  of custom 3D models in JSON format and has some other cool features. It even
+                  has a raytracer which can render reflections and shadows!
+                </p>
+                <p>
+                  <a href="http://code.google.com/p/mea3d">Click here for mea3D source code</a>.<br>
+                  To see a demo of mea3D, <a href="/chrome_experiment">check my Chrome Experiment</a>.
+                </p>
+              </span>
+            </div>
+          </li>
+         </ul>
+      </div>
+    </div>
+  </div>
+ </div>
+</div>
+
+
+<div id="popupRandomStuff" class="popup">
+  <div class="popup_container">
+    <div class="popup_titlebar">
+      <span></span>
+    </div>    
+    <div class="popup_titlebar_close">
+      <span>
+        <a href="#" class="popup_titlebar_close_button" onclick="closePopup('popupRandomStuff');return false;"></a>
+      </span>
+    </div>
+
+    <br>
+    <div class="popup_body">
+      <div>
+        <h1>RANDOM STUFF</h1>
+        <span class="popup_desc">Here are some very random stuff I made some time ago. </span>
+        <div style="height: 550px; overflow-x: hidden; overflow-y:auto">
+        <ul class="project-list">
+          <li><h2>3D Models</h2></li>
+          <li class="project-list-item">
+            <div>
+              <span class="project-list-image">
+                <img src="web/trex.png" border=0>
+              </span>
+              <span class="project-list-desc">
+                <h1>Tyrannosaurus Rex</h1>
+                <p>
+                 Yes, -the- T-Rex from Jurassic Park. Modelled in Maya.
+                </p>
+              </span>            
+            </div>
+          </li>
+          <li class="project-list-item">
+            <div>
+            <span class="project-list-image"><img src="web/space_shuttle.png" border=0></span>
+            <span class="project-list-desc">
+              <h1>Space Shuttle</h1>
+               <p>This is either Atlantis, Endeavour or Columbia.                 
+               </p>
+             </span>            
+           </div>
+          </li>
+          <li class="project-list-item">
+            <div>
+              <span class="project-list-image"><img src="web/bmw_x6.png" border=0></span>
+              <span class="project-list-desc">
+                <h1>BMW X6</h1>
+                <p>BMW X6 modelled in Maya using subdivisions. This was even before 
+                the car's inauguration,
+                </p>
+              </span>            
+            </div>
+          </li>
+          <li><h2>Electronics</h2></li>
+          <li class="project-list-item">
+            <div>
+              <span class="project-list-image">
+                <img src="web/senderos.png" border=0>
+              </span>
+              <span class="project-list-desc">
+                <h1>SENDEROS The Robot</h1>
+                <p>
+                  Senderos was a robot which I built with a team five in my senior 
+                  year at METU. The robot can detect a randomly placed ball 
+                  and a goal and tries to shoot the ball into the goal. It is 
+                  autonomous, i.e. it is not controller by a remote control or 
+                  anything similar.
+                </p>
+              </span>            
+            </div>
+          </li>
+         </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+<center>
+<div id="ie_div" style="display:none">
+  <ul class="ie_nav_list">
+    <li><h1><a href="#" onclick="javascript:showPopup('popupAboutMe')">About Me</a></h1></li>
+    <li><h1><a href="#" onclick="javascript:showPopup('popupProjects')">Projects</a></h1></li>
+    <li><h1><a href="#" onclick="javascript:showPopup('popupRandomStuff')">Random</a></h1></li>
+  </ul>
+  <div id="ie_warning">
+    <div>
+    <span>Dear Internet Explorer user,</span><br>
+    This webpage contains 3D navigation - something that is not common to today's websites. It uses
+    a JavaScript 3D engine and HTML5 canvas element. Internet Explorer 8 and previous versions do not support
+    HTML5 canvas, so you cannot see this breathtaking webpage as intended. You might consider
+    checking back again with Firefox, Google Chrome, Opera, Safari or any other browser that
+    supports HTML5 canvas.
+    </div>
+  </div>
+</div>
+</center>
+
+<div style="width:750px; margin: 0 auto">
+  <span style="float: right; margin-right:5px; 
+  color:#666; font-size:9pt; font-family: Verdana; font-weight: normal">
+  © Mustafa Emre Acer
+  </span>
+
+  <span id="switch_2d_panel" style="float: left; margin-right:20px; 
+  color:#666; font-size:9pt; font-family: Verdana; font-weight: normal">
+  <a href="#" onclick="switchToPlainPage()" class="minilink">Switch to 2D Web Page</a> |
+  W,S,A,D: Move around | 1,2,3,4: Toggle Lights |  
+  <span style="margin-left:30px; font-size:9pt">Uses <a href="http://mustafaacer.com/chrome_experiment" class="minilink">mea3D</a></span>
+  </span>  
+  <span id="switch_3d_panel" style="float: left; margin-right:20px; display:none; 
+  color:#666; font-size:9pt; font-family: Verdana; font-weight: normal">
+    <a href="#" onclick="switchTo3DPage()" class="minilink">Switch to 3D Web Page</a>
+  </span>
+</div>
+
+<script src="compiled/homepage.js"></script>
+<script>
+if (typeof(de)=="undefined") {
+  de = function(s) {
+    return document.getElementById(s);
+  }
+}
+function showPopup(id) {
+ document.getElementById(id).style.display = "block";
+ fadeIn(id);
+}
+function closePopup(id) {
+  fadeOut(id);  
+  if (quake) {
+    quake.paused = false;
+  }
+}
+function switchToPlainPage() {
+  if (quake) {
+    quake.paused = true;
+    de("sceneDiv").style.display = "none";
+    de("ie_div").style.display = "block";
+    
+    de("switch_2d_panel").style.display = "none";
+    if (!can3D) {
+      de("switch_3d_panel").style.display = "none";
+      de("ie_warning").style.display = "block";
+    } else {
+      de("switch_3d_panel").style.display = "block";
+      de("ie_warning").style.display = "none";
+    }
+  }
+}
+function switchTo3DPage() { 
+  if (can3D && quake) {
+    de("switch_3d_panel").style.display = "none";
+    de("switch_2d_panel").style.display = "block";
+    de("sceneDiv").style.display = "block";
+    de("ie_div").style.display = "none";
+    quake.paused = false;    
+  }
+}
+var sceneWidth = 800, sceneHeight = 600;
+if (window.getComputedStyle) {
+  var sceneStyle = window.getComputedStyle(de("sceneDiv"), "");
+  sceneWidth = parseInt(sceneStyle.getPropertyValue("width"), 10);
+  sceneHeight = parseInt(sceneStyle.getPropertyValue("height"), 10);
+}
+var quake = new mea3D.QuakeApp();
+var can3D = quake.init({
+  "rendererOptions":{
+    "width": sceneWidth-2,
+    "height": sceneHeight-2,
+    "enableMouseNavigation":true,
+    "cameraPosition":new Vector3(0,2,-20),
+    "cameraDirection":new Vector3(0,0,1),
+    "fovHorizontal": 3.1415/2.5,
+    "fovVertical": null      // Auto calculate
+  }
+});
+if (can3D) {
+  quake.run();
+  de("switch_2d_panel").style.display = "block";
+} else {
+  // IE user:
+  switchToPlainPage();
+  de("switch_2d_panel").style.display = "none";
+}
+
+function fadeIn(id) {
+  var steps = 7;
+  var el = document.getElementById(id);
+  function animateFadeIn() {
+    if (typeof(el.style.opacity)!="undefined") {
+      el.style.opacity = 1-steps/10.0;
+    }
+    if ((steps--)>0) {
+      setTimeout(animateFadeIn, 50);
+    }
+  }
+  animateFadeIn();
+}
+function fadeOut(id) {
+  var steps = 5;
+  var el = document.getElementById(id);
+  function animateFadeOut() {
+    if (typeof(el.style.opacity)!="undefined") {
+      el.style.opacity = steps/10.0;
+    }
+    if ((steps--)>0) {
+      setTimeout(animateFadeOut, 50);
+    } else {
+      el.style.display = "none";  
+    }
+  }
+  animateFadeOut();
+}
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-165235-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+
