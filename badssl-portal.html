@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+</head>
+<style>
+ body, button {
+  font-size: 1.5em;
+ }
+</style>
+<body>
+  <h1>Wi-fi Onboarding</h1>
+<button onclick="openAndClose()">
+  Click here to open a captive portal interstitial and close it (to trigger Network Connectivity check)
+</button>
+<br>
+<br>
+<div id="output"></div>
+<script>
+document.getElementById("output").innerHTML += "Current navigator.connection.type: <b>" + navigator.connection.type + "</b>";
+function openAndClose() {
+  var w = window.open("https://captive-portal.badssl.com");
+  setTimeout(function() {
+    document.getElementById("output").innerHTML += "<br><br>New navigator.connection.type: <b>" + navigator.connection.type + "</b>";
+    document.getElementById("output").innerHTML += "<br><br><b>You are now connected to the Internet over Wi-Fi.</b>";
+    w.close();
+  }, 3000);
+}
+</script>
+</body>
+</html>
