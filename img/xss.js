@@ -1,1 +1,0 @@
-pass = document.getElementById("pass").value;
